@@ -34,6 +34,6 @@ public class RoleCommandImplementation implements RoleCommand {
 			}
 			throw NotFoundException.create("Not Found: Role id {0} does not exist", role.getId());
 		}
-		throw BadRequestException.create("Not Found: Role id cannot be null");
+		throw BadRequestException.create("Bad Request: Role id cannot be null");
 	}
 }

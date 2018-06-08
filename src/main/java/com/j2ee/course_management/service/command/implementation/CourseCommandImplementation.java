@@ -37,6 +37,6 @@ public class CourseCommandImplementation implements CourseCommand {
 			}
 			throw NotFoundException.create("Not Found: Course id {0} does not exist", course.getId());
 		}
-		throw BadRequestException.create("Not Found: Course id cannot be null");
+		throw BadRequestException.create("Bad Request: Course id cannot be null");
 	}
 }

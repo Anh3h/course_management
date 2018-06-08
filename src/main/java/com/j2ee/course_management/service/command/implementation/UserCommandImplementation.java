@@ -42,6 +42,6 @@ public class UserCommandImplementation implements UserCommand {
 			}
 			throw NotFoundException.create("Not Found: User id {0} does not exist", user.getId());
 		}
-		throw BadRequestException.create("Not Found: User id cannot be null");
+		throw BadRequestException.create("Bad Request: User id cannot be null");
 	}
 }
