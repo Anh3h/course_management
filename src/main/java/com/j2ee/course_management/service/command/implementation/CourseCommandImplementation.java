@@ -39,4 +39,12 @@ public class CourseCommandImplementation implements CourseCommand {
 		}
 		throw BadRequestException.create("Bad Request: Course id cannot be null");
 	}
+
+	@Override
+	public void deleteCourse(Long courseId) {
+		Course course = courseRepository.getOne(courseId);
+		if (course != null){
+			courseRepository.delete(course);
+		}
+	}
 }

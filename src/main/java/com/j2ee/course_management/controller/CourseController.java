@@ -97,4 +97,13 @@ public class CourseController {
 		throw ForbiddenException.create("Forbidden: Course id used in model does not match that on the path");
 	}
 
+	@RequestMapping(
+			value = "/courseId",
+			method = RequestMethod.DELETE
+	)
+	public ResponseEntity<HttpStatus> deleteCourse(@PathVariable("courseId") Long courseId) {
+		this.courseCommand.deleteCourse(courseId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
 }

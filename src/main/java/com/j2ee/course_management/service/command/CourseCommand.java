@@ -6,5 +6,6 @@ public interface CourseCommand {
 
 	Course createCourse(Course course);
 	Course updateCourse(Course course);
+	void deleteCourse(Long courseId);
 
 }
