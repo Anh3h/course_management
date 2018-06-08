@@ -7,6 +7,7 @@ import com.j2ee.course_management.model.User;
 import com.j2ee.course_management.repository.UserRepository;
 import com.j2ee.course_management.service.command.UserCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +18,14 @@ public class UserCommandImplementation implements UserCommand {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@Override
 	public User createUser(User user) {
 		if (userRepository.findByEmail(user.getEmail()) == null) {
 			if (userRepository.findByEmail(user.getUsername()) == null) {
-
-				// TODO Add password encode before save password
+				user.setPassword(passwordEncoder.encode(user.getPassword()));
 				user.setId(0L);
 				return userRepository.save(user);
 			}
