@@ -20,6 +20,7 @@ public class Course {
 	@Column(unique = true)
 	private String code;
 	@NotNull
+	@Column(unique = true)
 	private String title;
 	@NotNull
 	@Column(name = "credit_value")
@@ -81,4 +82,11 @@ public class Course {
 		this.outline = outline;
 	}
 
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 }

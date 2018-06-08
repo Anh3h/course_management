@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class User {
 
@@ -30,6 +32,7 @@ public class User {
 	@Column(unique = true)
 	private String username;
 	@NotNull
+	@JsonIgnore
 	private String password;
 	private String telephone;
 
