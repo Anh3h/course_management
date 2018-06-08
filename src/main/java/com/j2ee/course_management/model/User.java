@@ -1,6 +1,7 @@
 package com.j2ee.course_management.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,8 +24,10 @@ public class User {
 	private String firstName;
 	@NotNull
 	private String lastName;
-	private String email;
 	@NotNull
+	@Column(unique = true)
+	private String email;
+	@Column(unique = true)
 	private String username;
 	@NotNull
 	private String password;

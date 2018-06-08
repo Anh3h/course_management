@@ -1,6 +1,7 @@
 package com.j2ee.course_management.model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,7 @@ public class Role implements GrantedAuthority {
 	private Long id;
 
 	@NotNull
+	@Column(unique = true)
 	private String name;
 
 	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
