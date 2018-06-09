@@ -8,6 +8,7 @@ import com.j2ee.course_management.exception.NotFoundException;
 import com.j2ee.course_management.model.Course;
 import com.j2ee.course_management.service.command.CourseCommand;
 import com.j2ee.course_management.service.query.CourseQuery;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class CourseController {
 	@Autowired
 	private CourseCommand courseCommand;
 
+	@ApiOperation(value="Add new course")
 	@RequestMapping(
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -40,6 +42,7 @@ public class CourseController {
 		return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
 	}
 
+	@ApiOperation(value="Get all/some courses")
 	@RequestMapping(
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE
@@ -57,6 +60,7 @@ public class CourseController {
 		return new ResponseEntity<>(courses, HttpStatus.OK);
 	}
 
+	@ApiOperation(value="Find course by course_id")
 	@RequestMapping(
 			value = "/courseId",
 			method = RequestMethod.GET,
@@ -70,6 +74,7 @@ public class CourseController {
 		return new ResponseEntity<>(course, HttpStatus.OK);
 	}
 
+	@ApiOperation(value="Find course by course_code")
 	@RequestMapping(
 			value = "/code",
 			method = RequestMethod.GET,
@@ -83,6 +88,7 @@ public class CourseController {
 		return new ResponseEntity<>(course, HttpStatus.OK);
 	}
 
+	@ApiOperation(value="Update an existing course")
 	@RequestMapping(
 			value = "/courseId",
 			method = RequestMethod.PUT,
@@ -97,6 +103,7 @@ public class CourseController {
 		throw ForbiddenException.create("Forbidden: Course id used in model does not match that on the path");
 	}
 
+	@ApiOperation(value="Delete course")
 	@RequestMapping(
 			value = "/courseId",
 			method = RequestMethod.DELETE

@@ -8,6 +8,7 @@ import com.j2ee.course_management.exception.NotFoundException;
 import com.j2ee.course_management.model.User;
 import com.j2ee.course_management.service.command.UserCommand;
 import com.j2ee.course_management.service.query.UserQuery;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class UserController {
 	@Autowired
 	private UserCommand userCommand;
 
+	@ApiOperation(value="Add new user account")
 	@RequestMapping(
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -40,6 +42,7 @@ public class UserController {
 		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
 	}
 
+	@ApiOperation(value="Get all/some users")
 	@RequestMapping(
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE
@@ -57,6 +60,7 @@ public class UserController {
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
+	@ApiOperation(value="Find user by username")
 	@RequestMapping(
 			value = "/userId",
 			method = RequestMethod.GET,
@@ -70,6 +74,7 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
+	@ApiOperation(value="Find user by email")
 	@RequestMapping(
 			value = "/email",
 			method = RequestMethod.GET,
@@ -83,6 +88,7 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
+	@ApiOperation(value="Update an existing user's account")
 	@RequestMapping(
 			value = "/userId",
 			method = RequestMethod.PUT,
