@@ -62,7 +62,7 @@ public class CourseController {
 
 	@ApiOperation(value="Find course by course_id")
 	@RequestMapping(
-			value = "/courseId",
+			value = "/{courseId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE
 	)
@@ -76,7 +76,7 @@ public class CourseController {
 
 	@ApiOperation(value="Find course by course_code")
 	@RequestMapping(
-			value = "/code",
+			value = "/{code}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE
 	)
@@ -90,7 +90,7 @@ public class CourseController {
 
 	@ApiOperation(value="Update an existing course")
 	@RequestMapping(
-			value = "/courseId",
+			value = "/{courseId}",
 			method = RequestMethod.PUT,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE
@@ -105,7 +105,7 @@ public class CourseController {
 
 	@ApiOperation(value="Delete course")
 	@RequestMapping(
-			value = "/courseId",
+			value = "/{courseId}",
 			method = RequestMethod.DELETE
 	)
 	public ResponseEntity<HttpStatus> deleteCourse(@PathVariable("courseId") Long courseId) {

@@ -62,7 +62,7 @@ public class RoleController {
 
 	@ApiOperation(value="Find role by role_id")
 	@RequestMapping(
-			value = "/roleId",
+			value = "/{roleId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE
 	)
@@ -76,7 +76,7 @@ public class RoleController {
 
 	@ApiOperation(value="Update existing role")
 	@RequestMapping(
-			value = "/roleId",
+			value = "/{roleId}",
 			method = RequestMethod.PUT,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE

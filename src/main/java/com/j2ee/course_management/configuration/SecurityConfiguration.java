@@ -21,6 +21,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /*@EnableGlobalMethodSecurity(securedEnabled = true)*/
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	private UserRepository userRepository;
+
 	private static final String[] AUTH_WHITELIST = {
 		"/swagger-resources/**",
 		"/swagger-ui.html",
@@ -33,7 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.csrf().disable()
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/api/v1/authenticate").permitAll()
-				.antMatchers(HttpMethod.GET, "/**").permitAll()
+				/*.antMatchers(HttpMethod.GET, "/**").permitAll()*/
 				.antMatchers(AUTH_WHITELIST).permitAll()
 				.anyRequest().authenticated()
 				.and()
@@ -57,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public UserDetailsService userDetailsServiceBean() {
-		return new CustomUserDetailService();
+		return new CustomUserDetailService(userRepository);
 	}
 
 	@Bean

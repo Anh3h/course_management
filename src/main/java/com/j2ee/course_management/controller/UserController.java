@@ -60,14 +60,13 @@ public class UserController {
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
-	@ApiOperation(value="Find user by username")
+	@ApiOperation(value="Find user by user_id")
 	@RequestMapping(
-			value = "/userId",
+			value = "/{userId}",
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE
 	)
-	public ResponseEntity<User> getUser(@PathVariable("userId") Long userId) {
-		System.out.println(userId);
+	public ResponseEntity<User> getUserById(@PathVariable("userId") Long userId) {
 		User user = this.userQuery.findById(userId);
 		if (user == null) {
 			throw NotFoundException.create("Not Found: User with id, {0} does not exist", userId);
@@ -75,24 +74,9 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
-	@ApiOperation(value="Find user by email")
-	@RequestMapping(
-			value = "/email",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE
-	)
-	public ResponseEntity<User> getUser(@PathVariable("email") String email) {
-		System.out.println(email);
-		User user = this.userQuery.findByEmail(email);
-		if (user == null) {
-			throw NotFoundException.create("Not Found: User with email, {0} does not exist", email);
-		}
-		return new ResponseEntity<>(user, HttpStatus.OK);
-	}
-
 	@ApiOperation(value="Update an existing user's account")
 	@RequestMapping(
-			value = "/userId",
+			value = "/{userId}",
 			method = RequestMethod.PUT,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE
