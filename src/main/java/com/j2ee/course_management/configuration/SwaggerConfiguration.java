@@ -1,5 +1,6 @@
-package com.j2ee.course_management.config;
+package com.j2ee.course_management.configuration;
 
+import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -13,7 +14,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
-@EnableWebMvc
 @EnableSwagger2
 public class SwaggerConfiguration {
 
@@ -21,7 +21,7 @@ public class SwaggerConfiguration {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.any())
+				.apis(Predicates.not(RequestHandlerSelectors.basePackage("org.springframework.boot")))
 				.paths(PathSelectors.any())
 				.build()
 				.apiInfo(apiInfo());
@@ -37,6 +37,6 @@ public class SwaggerConfiguration {
 				.licenseUrl("")
 				.version("API V1.0.0")
 				.build();
-
 	}
+
 }

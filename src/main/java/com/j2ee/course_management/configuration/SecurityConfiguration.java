@@ -1,4 +1,4 @@
-package com.j2ee.course_management.config;
+package com.j2ee.course_management.configuration;
 
 import com.j2ee.course_management.repository.UserRepository;
 import com.j2ee.course_management.service.query.CustomUserDetailService;
@@ -18,19 +18,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+/*@EnableGlobalMethodSecurity(securedEnabled = true)*/
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserRepository userRepository;
+	private static final String[] AUTH_WHITELIST = {
+		"/swagger-resources/**",
+		"/swagger-ui.html",
+		"/v2/api-docs",
+		"/webjars/**"
+	};
 
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable()
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/api/v1/authenticate").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-				.antMatchers("/v2/api-docs", "/swagger-ui.html", "/swagger-ui").permitAll()
+				.antMatchers(HttpMethod.GET, "/**").permitAll()
+				.antMatchers(AUTH_WHITELIST).permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.httpBasic()

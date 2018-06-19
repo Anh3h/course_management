@@ -67,6 +67,7 @@ public class UserController {
 			produces = MediaType.APPLICATION_JSON_VALUE
 	)
 	public ResponseEntity<User> getUser(@PathVariable("userId") Long userId) {
+		System.out.println(userId);
 		User user = this.userQuery.findById(userId);
 		if (user == null) {
 			throw NotFoundException.create("Not Found: User with id, {0} does not exist", userId);
@@ -81,6 +82,7 @@ public class UserController {
 			produces = MediaType.APPLICATION_JSON_VALUE
 	)
 	public ResponseEntity<User> getUser(@PathVariable("email") String email) {
+		System.out.println(email);
 		User user = this.userQuery.findByEmail(email);
 		if (user == null) {
 			throw NotFoundException.create("Not Found: User with email, {0} does not exist", email);

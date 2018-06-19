@@ -1,4 +1,4 @@
-package com.j2ee.course_management.config;
+package com.j2ee.course_management.configuration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

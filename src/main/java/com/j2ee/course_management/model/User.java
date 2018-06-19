@@ -10,12 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table
 public class User {
 
 	@Id

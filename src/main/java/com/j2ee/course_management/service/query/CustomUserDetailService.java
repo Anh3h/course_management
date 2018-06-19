@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,21 +24,22 @@ public class CustomUserDetailService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		System.out.println(username +" ---------------------------");
 		try {
-			if(isEmail(username)){
-				User user = this.userRepository.findByEmail(username);
-				if (user != null) {
-					List<GrantedAuthority> authorities = new ArrayList<>();
-					authorities.add(user.getRole());
-					return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-							true, true, true, true, authorities);
-				}
-				throw new UsernameNotFoundException(String.format("Email[%s] not found", username));
-			}
+			System.out.println("Username is username");
+			System.out.println("Test1");
+			System.out.println(passwordEncoder.encode("password"));
+			System.out.println("Testing ******");
 
-			User user = this.userRepository.findByUsername(username);
+			User user = this.userRepository.getOne(1L);
+			//System.out.println(user);
+			//System.out.println(user.getFirstName());
+			System.out.println(passwordEncoder.encode("password"));
 			if (user != null) {
 				List<GrantedAuthority> authorities = new ArrayList<>();
 				authorities.add(user.getRole());
