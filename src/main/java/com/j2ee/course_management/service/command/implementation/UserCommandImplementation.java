@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 
 @Service
 @Transactional
@@ -22,26 +23,34 @@ public class UserCommandImplementation implements UserCommand {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public User createUser(User user) {
+	public BindingResult createUser(User user, BindingResult bindingResult) {
 		if (userRepository.findByEmail(user.getEmail()) == null) {
 			if (userRepository.findByEmail(user.getUsername()) == null) {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
 				user.setId(0L);
-				return userRepository.save(user);
+				userRepository.save(user);
+				return bindingResult;
 			}
-			throw ConflictException.create("Conflict: User username, {0} already exist", user.getUsername());
+			bindingResult.rejectValue("Username", "error.user",
+					"Conflict: User username already exist");
+			return bindingResult;
 		}
-		throw ConflictException.create("Conflict: User email, {0} already exist", user.getEmail());
+		bindingResult.rejectValue("Email", "error.user",
+				"Conflict: User email already exist");
+		return bindingResult;
 	}
 
 	@Override
-	public User updateUser(User user) {
+	public BindingResult updateUser(User user, BindingResult bindingResult) {
 		if (user.getId() != null) {
 			if (userRepository.existsById(user.getId())){
-				return userRepository.save(user);
+				userRepository.save(user);
+				return bindingResult;
 			}
-			throw NotFoundException.create("Not Found: User id {0} does not exist", user.getId());
+			bindingResult.rejectValue("Id", "error.user","Not Found: User id does not exist");
+			return bindingResult;
 		}
-		throw BadRequestException.create("Bad Request: User id cannot be null");
+		bindingResult.rejectValue("Id", "error.user","Not Found: User id cannot be empty");
+		return bindingResult;
 	}
 }

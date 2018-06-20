@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -35,10 +36,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 		http.csrf().disable()
 				.authorizeRequests()
-				.antMatchers(HttpMethod.POST, "/api/v1/authenticate").permitAll()
-				/*.antMatchers(HttpMethod.GET, "/**").permitAll()*/
+				.antMatchers("/").permitAll()
+				.antMatchers("/login").permitAll()
 				.antMatchers(AUTH_WHITELIST).permitAll()
-				.anyRequest().authenticated()
+				.antMatchers(HttpMethod.GET, "/**").permitAll()
+				.antMatchers("/admin/**").hasAuthority("LECTURER").anyRequest()
+				.authenticated().and().csrf().disable().formLogin()
+				.loginPage("/login").failureUrl("/login?error=true")
+				.defaultSuccessUrl("/dashboard", true)
+				.and().logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/").and().exceptionHandling()
+				.accessDeniedPage("/access-denied")
 				.and()
 				.httpBasic()
 				.authenticationEntryPoint(getBasicAuthEntryPoint())
@@ -55,7 +64,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) {
-		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+		web.ignoring()
+				.antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**")
+				.antMatchers(HttpMethod.OPTIONS, "/**");
 	}
 
 	@Override

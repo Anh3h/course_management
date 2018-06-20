@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <div layout:fragment="content">
+        <!--Nav bar-->
+        <div>
+            <nav class="navbar navbar-expand-lg" style="background-color: #287DCA">
+                <a class="navbar-brand" href="#" STYLE="color: #FFF">Coursera</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a role="button" href="/logout" style="margin-left: 87%" class="btn btn-warning">Logout</a>
+            </nav>
+        </div>
+        <!--Side bar-->
+        <div class="sidenav">
+            <a href="#about">Dashboard</a>
+            <a href="#services">Courses</a>
+            <a href="#clients">Options</a>
+            <a href="#contact">Users</a>
+        </div>
+        <!--Body-->
+        <div class="main container">
+            <div class="card-body">
+                <p style="font-size: 25px">Welcome</p>
+                <hr>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

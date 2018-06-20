@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head></head>
+<body>
+    <div layout:fragment="content">
+        <div class="card col-4 off-s" style="margin-top: 10%; margin-left: 35%">
+            <div class="card-body">
+                <form th:action="@{/login}" method="post" class="form-signin" >
+                    <h3 class="form-signin-heading" style="text-align: center" th:text="LOGIN"></h3>
+                    <div align="center" th:if="${param.error}">
+                        <small class="form-text text-danger">Email or Password invalid, please verify</small>
+                    </div>
+                    <input type="text" id="username" name="username" th:placeholder="Username" class="form-control" required >
+                    <br>
+                    <input type="password" id="password" name="password" th:placeholder="Password" class="form-control" required >
+                    <br>
+                    <button class="btn btn-primary float-right" name="Submit" value="Login" type="Submit" th:text="Login"></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<th:block layout:fragment="scripts">
+    <script src="/js/main.js"></script>
+</th:block>
+</html>

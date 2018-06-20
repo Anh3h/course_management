@@ -1,5 +1,6 @@
 package com.j2ee.course_management.controller;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 import com.j2ee.course_management.exception.BadRequestException;
@@ -14,14 +15,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
+@Controller
 @RequestMapping("/users")
 public class UserController {
 
@@ -31,16 +35,22 @@ public class UserController {
 	@Autowired
 	private UserCommand userCommand;
 
-	@ApiOperation(value="Add new user account")
+	/*@ApiOperation(value="Add new user account")
 	@RequestMapping(
-			method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE
+			value = "/registration",
+			method = RequestMethod.POST
 	)
-	public ResponseEntity<User> createUser(@RequestBody User user) {
-		User newUser = this.userCommand.createUser(user);
-		return new ResponseEntity<>(newUser, HttpStatus.CREATED);
-	}
+	public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		BindingResult result = this.userCommand.createUser(user, bindingResult);
+		if (result.hasErrors()){
+			modelAndView.setViewName("registration");
+		} else {
+			modelAndView.addObject("successMessage", "User has been registered successfully");
+			modelAndView.setViewName("redirect:/home.html");
+		}
+		return modelAndView;
+	}*/
 
 	@ApiOperation(value="Get all/some users")
 	@RequestMapping(
@@ -74,7 +84,7 @@ public class UserController {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
-	@ApiOperation(value="Update an existing user's account")
+	/*@ApiOperation(value="Update an existing user's account")
 	@RequestMapping(
 			value = "/{userId}",
 			method = RequestMethod.PUT,
@@ -87,6 +97,6 @@ public class UserController {
 			return new ResponseEntity<>(updatedUser, HttpStatus.OK);
 		}
 		throw ForbiddenException.create("Forbidden: User id used in model does not match that on the path");
-	}
+	}*/
 
 }
