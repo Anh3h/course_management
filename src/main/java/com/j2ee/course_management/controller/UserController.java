@@ -4,29 +4,19 @@ import javax.validation.Valid;
 import java.util.Map;
 
 import com.j2ee.course_management.exception.BadRequestException;
-import com.j2ee.course_management.exception.ForbiddenException;
-import com.j2ee.course_management.exception.NotFoundException;
 import com.j2ee.course_management.model.User;
 import com.j2ee.course_management.service.command.UserCommand;
 import com.j2ee.course_management.service.query.UserQuery;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/users")
 public class UserController {
 
 	@Autowired
@@ -35,8 +25,7 @@ public class UserController {
 	@Autowired
 	private UserCommand userCommand;
 
-	/*@ApiOperation(value="Add new user account")
-	@RequestMapping(
+	/*@RequestMapping(
 			value = "/registration",
 			method = RequestMethod.POST
 	)
@@ -52,13 +41,12 @@ public class UserController {
 		return modelAndView;
 	}*/
 
-	@ApiOperation(value="Get all/some users")
 	@RequestMapping(
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE
+			value = "/users",
+			method = RequestMethod.GET
 	)
-	public ResponseEntity<Page<User>> getUsers(@RequestParam(value = "page", required = false) Integer page,
-			@RequestParam(value = "size", required = false) Integer size) {
+	public ModelAndView getUsers(@Valid Integer page, @Valid Integer size) {
+		ModelAndView modelAndView = new ModelAndView();
 		Map<String, Integer> pageAttributes = PageValidator.validatePageAndSize(page, size);
 		page = pageAttributes.get("page");
 		size = pageAttributes.get("size");
@@ -67,36 +55,61 @@ public class UserController {
 		if (page > users.getTotalPages()) {
 			throw BadRequestException.create("Bad Request: Page number does not exist");
 		}
-		return new ResponseEntity<>(users, HttpStatus.OK);
+		modelAndView.setViewName("user/list");
+		modelAndView.addObject("users", users);
+		return modelAndView;
 	}
 
-	@ApiOperation(value="Find user by user_id")
 	@RequestMapping(
-			value = "/{userId}",
-			method = RequestMethod.GET,
-			produces = MediaType.APPLICATION_JSON_VALUE
+			value = "/users/{userId}",
+			method = RequestMethod.GET
 	)
-	public ResponseEntity<User> getUserById(@PathVariable("userId") Long userId) {
+	public ModelAndView getUserById(@PathVariable("userId") Long userId) {
+		ModelAndView modelAndView = new ModelAndView();
 		User user = this.userQuery.findById(userId);
 		if (user == null) {
-			throw NotFoundException.create("Not Found: User with id, {0} does not exist", userId);
+			//bindingResult.reject("404", "Not Found: User with id does not exist");
+		} else {
+			modelAndView.addObject("user", user);
 		}
-		return new ResponseEntity<>(user, HttpStatus.OK);
+		modelAndView.setViewName("user/view");
+		return modelAndView;
 	}
 
-	/*@ApiOperation(value="Update an existing user's account")
 	@RequestMapping(
-			value = "/{userId}",
-			method = RequestMethod.PUT,
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE
+			value = "/users/update/{userId}",
+			method = RequestMethod.POST
 	)
-	public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable("userId") Long userId) {
+	public ModelAndView updateUser(@Valid User user, BindingResult bindingResult, @PathVariable("userId") Long userId) {
+		ModelAndView modelAndView = new ModelAndView();
+		System.out.println("Updating user...");
 		if (userId == user.getId()) {
-			User updatedUser = this.userCommand.updateUser(user);
-			return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+			bindingResult = this.userCommand.updateUser(user, bindingResult);
+			if (bindingResult.hasErrors()){
+				modelAndView.setViewName("user/edit");
+			}
+			modelAndView.setViewName("redirect:/users/edit/" + user.getId());
+			return modelAndView;
 		}
-		throw ForbiddenException.create("Forbidden: User id used in model does not match that on the path");
-	}*/
+		bindingResult.reject("403", "Forbidden: User id used in model does not match that on the path");
+		modelAndView.setViewName("user/edit");
+		return modelAndView;
+	}
+
+	@RequestMapping(
+			value = "/users/edit/{userId}",
+			method = RequestMethod.GET
+	)
+	public ModelAndView updateUserForm(@PathVariable("userId") Long userId) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = this.userQuery.findById(userId);
+		if (user == null) {
+			//bindingResult.reject("404", "Not Found: User with id does not exist");
+		} else {
+			modelAndView.addObject("user", user);
+		}
+		modelAndView.setViewName("user/edit");
+		return modelAndView;
+	}
 
 }

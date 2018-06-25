@@ -8,7 +8,6 @@ import com.j2ee.course_management.exception.NotFoundException;
 import com.j2ee.course_management.model.Role;
 import com.j2ee.course_management.service.command.RoleCommand;
 import com.j2ee.course_management.service.query.RoleQuery;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,6 @@ public class RoleController {
 	@Autowired
 	private RoleCommand roleCommand;
 
-	@ApiOperation(value="Add new role")
 	@RequestMapping(
 			method = RequestMethod.POST,
 			consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -42,7 +40,6 @@ public class RoleController {
 		return new ResponseEntity<>(newRole, HttpStatus.CREATED);
 	}
 
-	@ApiOperation(value="Get all/some roles")
 	@RequestMapping(
 			method = RequestMethod.GET,
 			produces = MediaType.APPLICATION_JSON_VALUE
@@ -60,7 +57,6 @@ public class RoleController {
 		return new ResponseEntity<>(roles, HttpStatus.OK);
 	}
 
-	@ApiOperation(value="Find role by role_id")
 	@RequestMapping(
 			value = "/{roleId}",
 			method = RequestMethod.GET,
@@ -74,7 +70,6 @@ public class RoleController {
 		return new ResponseEntity<>(role, HttpStatus.OK);
 	}
 
-	@ApiOperation(value="Update existing role")
 	@RequestMapping(
 			value = "/{roleId}",
 			method = RequestMethod.PUT,

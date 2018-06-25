@@ -1,0 +1,10 @@
+<nav th:fragment="navbar" class="navbar navbar-expand-lg" style="background-color: #287DCA"
+     xmlns:th="http://www.thymeleaf.org">
+    <a class="navbar-brand" href="#" STYLE="color: #FFF">Coursera</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--<span th:text ="${#authentication.getPrincipal().getUser().getFirstName()}"></span>-->
+    <a role="button" href="/logout" style="margin-left: 87%" class="btn btn-warning">Logout</a>
+</nav>

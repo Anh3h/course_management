@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div lang="en" th:replace="main/nav-bar :: nav.navbar"></div>
+    <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
+    <!--Body-->
+    <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
+        <div style="margin-top: 10%; margin-left: 20%; margin-right: 25%">
+           <!-- <form th:action="" th:object="" method="post" >-->
+            <form th:action="@{/users}" method="get">
+                <div class="form-group row">
+                    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="firstName" th:value="${user.firstName}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="lastName" th:value="${user.lastName}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="email" th:value="${user.email}">
+                    </div>
+                </div>
+                <!--<div class="form-group row">
+                    <label for="password1" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password1" >
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="password2" class="col-sm-2 col-form-label">Re-enter Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password2" >
+                    </div>
+                </div>-->
+                <div class="form-group row">
+                    <label for="telephone" class="col-sm-2 col-form-label">Telephone</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="telephone" th:value="${user.telephone}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="role" class="col-sm-2 col-form-label">Role</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" id="role" th:field="${user.role.name}">
+                            <option value="LECTURER">LECTURER</option>
+                            <option value="STUDENT">STUDENT</option>
+                            <option value="ADMIN">ADMIN</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div  style="margin-top: 5%; margin-left: 80%">
+                <button class="btn" name="Submit" value="Update" type="Submit" th:text="Update" style="color: #FFF; background-color: #111"></button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

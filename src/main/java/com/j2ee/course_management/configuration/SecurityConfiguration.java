@@ -20,7 +20,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 /*@EnableGlobalMethodSecurity(securedEnabled = true)*/
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class
+SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserRepository userRepository;

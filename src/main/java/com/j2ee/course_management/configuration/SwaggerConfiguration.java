@@ -1,3 +1,4 @@
+/*
 package com.j2ee.course_management.configuration;
 
 import com.google.common.base.Predicates;
@@ -40,3 +41,4 @@ public class SwaggerConfiguration {
 	}
 
 }
+*/

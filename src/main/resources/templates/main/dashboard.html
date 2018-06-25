@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}">
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
 </head>
 <body>
     <div layout:fragment="content">
-        <!--Nav bar-->
-        <div>
-            <nav class="navbar navbar-expand-lg" style="background-color: #287DCA">
-                <a class="navbar-brand" href="#" STYLE="color: #FFF">Coursera</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a role="button" href="/logout" style="margin-left: 87%" class="btn btn-warning">Logout</a>
-            </nav>
-        </div>
-        <!--Side bar-->
-        <div class="sidenav">
-            <a href="#about">Dashboard</a>
-            <a href="#services">Courses</a>
-            <a href="#clients">Options</a>
-            <a href="#contact">Users</a>
-        </div>
+        <div lang="en" th:replace="main/nav-bar :: nav.navbar"></div>
+        <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
         <!--Body-->
-        <div class="main container">
-            <div class="card-body">
-                <p style="font-size: 25px">Welcome</p>
-                <hr>
+        <div class="main container" style="margin-left: 16%; margin-top: 2%" >
+            <p style="font-size: 25px">Welcome</p>
+            <hr>
+            <div class="row" style="margin-top: 15%; margin-left: 3%">
+                <div class="col-sm-4">
+                    <div class="card" style="width: 20rem;">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Courses</h6>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Add</a>
+                            <a href="#" class="card-link">View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card col 4" style="width: 20rem;">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Options</h6>
+                            <p class="card-text">Some quick text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Add</a>
+                            <a href="#" class="card-link">View</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="card col 4" style="width: 20rem;">
+                        <div class="card-body">
+                            <h6 class="card-subtitle mb-2 text-muted">Users</h6>
+                            <p class="card-text">Some quick text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="card-link">Add</a>
+                            <a href="/users" class="card-link">View</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

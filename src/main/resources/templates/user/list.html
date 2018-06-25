@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div lang="en" th:replace="main/nav-bar :: nav.navbar"></div>
+    <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
+    <!--Body-->
+    <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
+        <div  style="margin-top: 5%; margin-left: 80%">
+            <a role="button" href="#" class="btn" style="color: #FFF; background-color: #111">Add user</a>
+        </div>
+        <div class="row" style="margin-top: 5%; margin-left: 3%; margin-right: 5%">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Telephone</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <th scope="row" th:text="${user.id}"></th>
+                        <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.telephone}"></td>
+                        <td>
+                            <a role="button" th:href="${'/users/' + user.id}" class="btn btn-warning">View</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
