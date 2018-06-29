@@ -4,6 +4,7 @@ import com.j2ee.course_management.exception.BadRequestException;
 import com.j2ee.course_management.exception.ConflictException;
 import com.j2ee.course_management.exception.NotFoundException;
 import com.j2ee.course_management.model.User;
+import com.j2ee.course_management.repository.RoleRepository;
 import com.j2ee.course_management.repository.UserRepository;
 import com.j2ee.course_management.service.command.UserCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class UserCommandImplementation implements UserCommand {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -41,16 +45,17 @@ public class UserCommandImplementation implements UserCommand {
 	}
 
 	@Override
-	public BindingResult updateUser(User user, BindingResult bindingResult) {
-		if (user.getId() != null) {
-			if (userRepository.existsById(user.getId())){
-				userRepository.save(user);
-				return bindingResult;
-			}
-			bindingResult.rejectValue("Id", "error.user","Not Found: User id does not exist");
+	public BindingResult updateUser(User newUser, Long userId, BindingResult bindingResult) {
+		User oldUser = this.userRepository.getOne(userId);
+		if (oldUser != null) {
+			oldUser.setFirstName(newUser.getFirstName());
+			oldUser.setLastName(newUser.getLastName());
+			oldUser.setEmail(newUser.getEmail());
+			oldUser.setTelephone(newUser.getTelephone());
+			userRepository.save(oldUser);
 			return bindingResult;
 		}
-		bindingResult.rejectValue("Id", "error.user","Not Found: User id cannot be empty");
+		bindingResult.rejectValue("Id", "error.user","Not Found: User id does not exist");
 		return bindingResult;
 	}
 }

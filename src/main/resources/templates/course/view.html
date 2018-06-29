@@ -22,29 +22,25 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Name</td>
-                    <td th:text="${user.firstName + ' ' + user.lastName}"></td>
+                    <td>Code</td>
+                    <td th:text="${course.code}"></td>
                 </tr>
                 <tr>
-                    <td>Username</td>
-                    <td th:text="${user.username}"></td>
+                    <td>Title</td>
+                    <td th:text="${course.title}"></td>
                 </tr>
                 <tr>
-                    <td>Email</td>
-                    <td th:text="${user.email}"></td>
+                    <td>Credit value</td>
+                    <td th:text="${course.creditValue}"></td>
                 </tr>
                 <tr>
-                    <td>Telephone</td>
-                    <td th:text="${user.telephone}"></td>
-                </tr>
-                <tr>
-                    <td>Role</td>
-                    <td th:text="${user.role.name}"></td>
+                    <td>Semester</td>
+                    <td th:text="${course.semester}"></td>
                 </tr>
                 </tbody>
             </table>
             <div  style="margin-top: 5%; margin-left: 85%">
-                <a role="button" th:href="${'/users/edit/' + user.id}" class="btn" style="color: #FFF; background-color: #111">Edit</a>
+                <a role="button" th:href="${'/course/edit/' + course.id}" class="btn" style="color: #FFF; background-color: #111">Edit</a>
             </div>
         </div>
     </div>

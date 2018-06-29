@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div lang="en" th:replace="main/nav-bar :: nav.navbar"></div>
+    <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
+    <!--Body-->
+    <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
+        <div  style="margin-top: 5%; margin-left: 80%">
+            <a role="button" href="#" class="btn" style="color: #FFF; background-color: #111">Add Option</a>
+        </div>
+        <div class="row" style="margin-top: 5%; margin-left: 3%; margin-right: 5%">
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">name</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="option : ${options}">
+                    <th scope="row" th:text="${option.id}"></th>
+                    <td th:text="${option.name}"></td>
+                    <td>
+                        <a role="button" th:href="${'/options/' + option.id}" class="btn btn-warning">View</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -8,7 +8,7 @@
     <div layout:fragment="content">
         <div class="card col-4 off-s" style="margin-top: 10%; margin-left: 35%">
             <div class="card-body">
-                <form th:action="@{/login}" method="post" class="form-signin" >
+                <form th:action="@{/login}" th:method="post" class="form-signin" >
                     <h3 class="form-signin-heading" style="text-align: center" th:text="LOGIN"></h3>
                     <div align="center" th:if="${param.error}">
                         <small class="form-text text-danger">Email or Password invalid, please verify</small>

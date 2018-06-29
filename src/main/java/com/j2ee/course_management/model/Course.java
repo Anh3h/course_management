@@ -29,6 +29,11 @@ public class Course {
 	private String outline;
 	@ManyToMany(mappedBy = "courses")
 	private List<User> users;
+	@NotNull
+	@ManyToMany(mappedBy = "courses")
+	private List<Options> options;
+	@NotNull
+	private String semester;
 
 
 	public Course() {
@@ -88,5 +93,21 @@ public class Course {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public List<Options> getOptions() {
+		return options;
+	}
+
+	public void setOptions(List<Options> options) {
+		this.options = options;
+	}
+
+	public String getSemester() {
+		return semester;
+	}
+
+	public void setSemester(String semester) {
+		this.semester = semester;
 	}
 }

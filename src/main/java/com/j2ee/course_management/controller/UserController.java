@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,16 +46,13 @@ public class UserController {
 			value = "/users",
 			method = RequestMethod.GET
 	)
-	public ModelAndView getUsers(@Valid Integer page, @Valid Integer size) {
+	public ModelAndView getUsers(Integer page, Integer size) {
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String, Integer> pageAttributes = PageValidator.validatePageAndSize(page, size);
 		page = pageAttributes.get("page");
 		size = pageAttributes.get("size");
 
 		Page<User> users = this.userQuery.findAll(page, size);
-		if (page > users.getTotalPages()) {
-			throw BadRequestException.create("Bad Request: Page number does not exist");
-		}
 		modelAndView.setViewName("user/list");
 		modelAndView.addObject("users", users);
 		return modelAndView;
@@ -67,11 +65,7 @@ public class UserController {
 	public ModelAndView getUserById(@PathVariable("userId") Long userId) {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = this.userQuery.findById(userId);
-		if (user == null) {
-			//bindingResult.reject("404", "Not Found: User with id does not exist");
-		} else {
-			modelAndView.addObject("user", user);
-		}
+		modelAndView.addObject("user", user);
 		modelAndView.setViewName("user/view");
 		return modelAndView;
 	}
@@ -80,19 +74,14 @@ public class UserController {
 			value = "/users/update/{userId}",
 			method = RequestMethod.POST
 	)
-	public ModelAndView updateUser(@Valid User user, BindingResult bindingResult, @PathVariable("userId") Long userId) {
+	public ModelAndView updateUser(@PathVariable("userId") Long userId, @ModelAttribute User user,
+			BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
-		System.out.println("Updating user...");
-		if (userId == user.getId()) {
-			bindingResult = this.userCommand.updateUser(user, bindingResult);
-			if (bindingResult.hasErrors()){
-				modelAndView.setViewName("user/edit");
-			}
-			modelAndView.setViewName("redirect:/users/edit/" + user.getId());
-			return modelAndView;
+		bindingResult = this.userCommand.updateUser(user, userId, bindingResult);
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName("user/edit");
 		}
-		bindingResult.reject("403", "Forbidden: User id used in model does not match that on the path");
-		modelAndView.setViewName("user/edit");
+		modelAndView.setViewName("redirect:/users/" + userId);
 		return modelAndView;
 	}
 
@@ -103,11 +92,7 @@ public class UserController {
 	public ModelAndView updateUserForm(@PathVariable("userId") Long userId) {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = this.userQuery.findById(userId);
-		if (user == null) {
-			//bindingResult.reject("404", "Not Found: User with id does not exist");
-		} else {
-			modelAndView.addObject("user", user);
-		}
+		modelAndView.addObject("user", user);
 		modelAndView.setViewName("user/edit");
 		return modelAndView;
 	}

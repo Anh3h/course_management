@@ -6,6 +6,6 @@ import org.springframework.validation.BindingResult;
 public interface UserCommand {
 
 	BindingResult createUser(User user, BindingResult bindingResult);
-	BindingResult updateUser(User user, BindingResult bindingResult);
+	BindingResult updateUser(User user, Long userId, BindingResult bindingResult);
 
 }
