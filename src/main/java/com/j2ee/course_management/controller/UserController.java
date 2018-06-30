@@ -71,6 +71,18 @@ public class UserController {
 	}
 
 	@RequestMapping(
+			value = "/users/edit/{userId}",
+			method = RequestMethod.GET
+	)
+	public ModelAndView updateUserForm(@PathVariable("userId") Long userId) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = this.userQuery.findById(userId);
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("user/edit");
+		return modelAndView;
+	}
+
+	@RequestMapping(
 			value = "/users/update/{userId}",
 			method = RequestMethod.POST
 	)
@@ -82,18 +94,6 @@ public class UserController {
 			modelAndView.setViewName("user/edit");
 		}
 		modelAndView.setViewName("redirect:/users/" + userId);
-		return modelAndView;
-	}
-
-	@RequestMapping(
-			value = "/users/edit/{userId}",
-			method = RequestMethod.GET
-	)
-	public ModelAndView updateUserForm(@PathVariable("userId") Long userId) {
-		ModelAndView modelAndView = new ModelAndView();
-		User user = this.userQuery.findById(userId);
-		modelAndView.addObject("user", user);
-		modelAndView.setViewName("user/edit");
 		return modelAndView;
 	}
 

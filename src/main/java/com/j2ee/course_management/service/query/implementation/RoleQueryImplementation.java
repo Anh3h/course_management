@@ -1,7 +1,5 @@
 package com.j2ee.course_management.service.query.implementation;
 
-import java.util.List;
-
 import com.j2ee.course_management.model.Role;
 import com.j2ee.course_management.repository.RoleRepository;
 import com.j2ee.course_management.service.query.RoleQuery;

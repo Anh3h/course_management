@@ -25,13 +25,12 @@ public class Course {
 	@NotNull
 	@Column(name = "credit_value")
 	private String creditValue;
-	private String content;
 	private String outline;
 	@ManyToMany(mappedBy = "courses")
 	private List<User> users;
 	@NotNull
 	@ManyToMany(mappedBy = "courses")
-	private List<Options> options;
+	private List<Department> departments;
 	@NotNull
 	private String semester;
 
@@ -71,14 +70,6 @@ public class Course {
 		this.creditValue = creditValue;
 	}
 
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
 	public String getOutline() {
 		return outline;
 	}
@@ -95,12 +86,20 @@ public class Course {
 		this.users = users;
 	}
 
-	public List<Options> getOptions() {
-		return options;
+	public void addUser(User user) {
+		this.users.add(user);
 	}
 
-	public void setOptions(List<Options> options) {
-		this.options = options;
+	public void addUserList(List<User> users) {
+		this.users.addAll(users);
+	}
+
+	public List<Department> getDepartments() {
+		return departments;
+	}
+
+	public void setDepartments(List<Department> departments) {
+		this.departments = departments;
 	}
 
 	public String getSemester() {

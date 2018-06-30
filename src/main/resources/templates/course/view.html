@@ -11,8 +11,8 @@
     <div lang="en" th:replace="main/nav-bar :: nav.navbar"></div>
     <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
     <!--Body-->
-    <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
-        <div class="row" style="margin-top: 10%; margin-left: 20%; margin-right: 25%">
+    <div class="main container" style="margin-left: 16%;" >
+        <div class="row" style="margin-top: 8%; margin-left: 20%; margin-right: 25%">
             <table class="table">
                 <thead class="thead-light">
                 <tr>
@@ -37,10 +37,26 @@
                     <td>Semester</td>
                     <td th:text="${course.semester}"></td>
                 </tr>
+                <tr>
+                    <td>Option</td>
+                    <td>
+                        <p th:each="department : ${course.departments}">
+                            <span th:text="${department.name}"></span>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Lecturers</td>
+                    <td>
+                        <p th:each="lecturer : ${lecturers}">
+                            <span th:text="${lecturer.firstName + ' ' + lecturer.lastName}"></span>
+                        </p>
+                    </td>
+                </tr>
                 </tbody>
             </table>
             <div  style="margin-top: 5%; margin-left: 85%">
-                <a role="button" th:href="${'/course/edit/' + course.id}" class="btn" style="color: #FFF; background-color: #111">Edit</a>
+                <a role="button" th:href="${'/courses/edit/' + course.id}" class="btn" style="color: #FFF; background-color: #111">Edit</a>
             </div>
         </div>
     </div>
