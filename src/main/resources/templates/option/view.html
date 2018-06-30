@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div lang="en" th:replace="main/nav-bar :: nav.navbar"></div>
+    <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
+    <!--Body-->
+    <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
+        <div class="row" style="margin-top: 10%; margin-left: 20%; margin-right: 25%">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Property</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td th:text="${department.name}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div  style="margin-top: 5%; margin-left: 85%">
+                <a role="button" th:href="${'/departments/edit/' + department.id}" class="btn" style="color: #FFF; background-color: #111">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

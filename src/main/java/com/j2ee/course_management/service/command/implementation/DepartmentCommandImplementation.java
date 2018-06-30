@@ -1,0 +1,39 @@
+package com.j2ee.course_management.service.command.implementation;
+
+import com.j2ee.course_management.model.Department;
+import com.j2ee.course_management.repository.DepartmentRepository;
+import com.j2ee.course_management.service.command.DepartmentCommand;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+
+@Service
+@Transactional
+public class DepartmentCommandImplementation implements DepartmentCommand {
+
+	@Autowired
+	private DepartmentRepository departmentRepository;
+
+	@Override
+	public Department createDepartment(Department department) {
+		return null;
+	}
+
+	@Override
+	public BindingResult updateDepartment(Department newDpt, Long departmentId, BindingResult bindingResult) {
+		Department oldDept = this.departmentRepository.getOne(departmentId);
+		if (oldDept != null) {
+			oldDept.setName(newDpt.getName());
+			departmentRepository.save(oldDept);
+			return bindingResult;
+		}
+		bindingResult.rejectValue("Id", "error.department","Not Found: Department id does not exist");
+		return bindingResult;
+	}
+
+	@Override
+	public void deleteDepartment(Long departmentId) {
+
+	}
+}
