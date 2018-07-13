@@ -1,11 +1,16 @@
 package com.j2ee.course_management.service.command.implementation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.j2ee.course_management.dao.CourseDAO;
 import com.j2ee.course_management.exception.BadRequestException;
 import com.j2ee.course_management.exception.ConflictException;
 import com.j2ee.course_management.exception.NotFoundException;
 import com.j2ee.course_management.model.Course;
+import com.j2ee.course_management.model.Department;
 import com.j2ee.course_management.repository.CourseRepository;
+import com.j2ee.course_management.repository.DepartmentRepository;
 import com.j2ee.course_management.service.command.CourseCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,10 +49,8 @@ public class CourseCommandImplementation implements CourseCommand {
 			oldCourse.setSemester(newCourse.getSemester());
 			oldCourse.setTitle(newCourse.getTitle());
 			oldCourse.setUsers(this.courseDAO.getCourseLecturers(courseId));
-			System.out.println(newCourse.getUsers().size());
 			oldCourse.addUserList(newCourse.getUsers());
-			System.out.println(newCourse.getDepartments().get(0).getName());
-			courseRepository.save(oldCourse);
+			courseRepository.saveAndFlush(oldCourse);
 			return bindingResult;
 		}
 		bindingResult.rejectValue("Id", "error.course","Not Found: Course id does not exist");

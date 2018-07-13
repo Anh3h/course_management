@@ -36,6 +36,18 @@ public class DepartmentController {
 	}*/
 
 	@RequestMapping(
+			value = "/departments/create",
+			method = RequestMethod.GET
+	)
+	public ModelAndView createDepartmentForm() {
+		ModelAndView modelAndView = new ModelAndView();
+		Department department = new Department();
+		modelAndView.addObject("department", department);
+		modelAndView.setViewName("option/create");
+		return modelAndView;
+	}
+
+	@RequestMapping(
 			value = "/departments",
 			method = RequestMethod.GET
 	)

@@ -1,11 +1,14 @@
 package com.j2ee.course_management.controller;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 import com.j2ee.course_management.exception.BadRequestException;
+import com.j2ee.course_management.model.Role;
 import com.j2ee.course_management.model.User;
 import com.j2ee.course_management.service.command.UserCommand;
+import com.j2ee.course_management.service.query.RoleQuery;
 import com.j2ee.course_management.service.query.UserQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,23 +27,39 @@ public class UserController {
 	private UserQuery userQuery;
 
 	@Autowired
+	private RoleQuery roleQuery;
+
+	@Autowired
 	private UserCommand userCommand;
 
-	/*@RequestMapping(
-			value = "/registration",
+	@RequestMapping(
+			value = "/users/create",
 			method = RequestMethod.POST
 	)
-	public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
+	public ModelAndView createUser(@ModelAttribute User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
-		BindingResult result = this.userCommand.createUser(user, bindingResult);
-		if (result.hasErrors()){
-			modelAndView.setViewName("registration");
-		} else {
-			modelAndView.addObject("successMessage", "User has been registered successfully");
-			modelAndView.setViewName("redirect:/home.html");
+		bindingResult = this.userCommand.createUser(user, bindingResult);
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName("user/create");
 		}
+		modelAndView.setViewName("redirect:/users/");
 		return modelAndView;
-	}*/
+	}
+
+
+	@RequestMapping(
+			value = "/users/create",
+			method = RequestMethod.GET
+	)
+	public ModelAndView createUserForm() {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = new User();
+		Page<Role> roles = this.roleQuery.findAll(1, 10);
+		modelAndView.addObject("user", user);
+		modelAndView.addObject("roles", roles);
+		modelAndView.setViewName("user/create");
+		return modelAndView;
+	}
 
 	@RequestMapping(
 			value = "/users",

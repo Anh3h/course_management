@@ -1,5 +1,6 @@
 package com.j2ee.course_management.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Course {
 	@ManyToMany(mappedBy = "courses")
 	private List<User> users;
 	@NotNull
-	@ManyToMany(mappedBy = "courses")
+	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
 	private List<Department> departments;
 	@NotNull
 	private String semester;
