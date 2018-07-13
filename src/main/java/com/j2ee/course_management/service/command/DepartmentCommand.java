@@ -5,7 +5,7 @@ import org.springframework.validation.BindingResult;
 
 public interface DepartmentCommand {
 
-	Department createDepartment(Department department);
+	BindingResult createDepartment(Department department, BindingResult bindingResult);
 	BindingResult updateDepartment(Department department, Long departmentId, BindingResult bindingResult);
 	void deleteDepartment(Long departmentId);
 

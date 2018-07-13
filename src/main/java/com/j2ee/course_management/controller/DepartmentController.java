@@ -25,15 +25,19 @@ public class DepartmentController {
 	@Autowired
 	private DepartmentCommand departmentCommand;
 
-	/*@RequestMapping(
-			method = RequestMethod.POST,
-			consumes = MediaType.APPLICATION_JSON_VALUE,
-			produces = MediaType.APPLICATION_JSON_VALUE
+	@RequestMapping(
+			value = "/departments/create",
+			method = RequestMethod.POST
 	)
-	public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-		Course newCourse = this.courseCommand.createCourse(course);
-		return new ResponseEntity<>(newCourse, HttpStatus.CREATED);
-	}*/
+	public ModelAndView createDepartment(@ModelAttribute Department department, BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		bindingResult = this.departmentCommand.createDepartment(department, bindingResult);
+		if (bindingResult.hasErrors()){
+			modelAndView.setViewName("departments/create");
+		}
+		modelAndView.setViewName("redirect:/departments/");
+		return modelAndView;
+	}
 
 	@RequestMapping(
 			value = "/departments/create",

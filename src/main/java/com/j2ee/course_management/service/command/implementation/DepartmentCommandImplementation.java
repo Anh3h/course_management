@@ -16,8 +16,13 @@ public class DepartmentCommandImplementation implements DepartmentCommand {
 	private DepartmentRepository departmentRepository;
 
 	@Override
-	public Department createDepartment(Department department) {
-		return null;
+	public BindingResult createDepartment(Department department, BindingResult bindingResult) {
+		if (this.departmentRepository.findByName(department.getName()) == null) {
+			departmentRepository.save(department);
+			return bindingResult;
+		}
+		bindingResult.rejectValue("Id", "error.department","Conflict: Department already exist");
+		return bindingResult;
 	}
 
 	@Override

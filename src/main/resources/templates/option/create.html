@@ -13,15 +13,16 @@
     <!--Body-->
     <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
         <div style="margin-top: 18%; margin-left: 20%; margin-right: 25%">
-            <form th:action="@{'/departments/create/'}" th:object="${department}" th:method="post">
+            <form th:action="@{'/departments/create'}" th:object="${department}" th:method="post">
                 <div class="form-group row">
                     <label for="name" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" th:field="${department.name}" th:value="${department.name}">
+                        <input type="text" class="form-control" id="name" th:field="${department.name}"
+                               th:value="${department.name}" required>
                     </div>
                 </div>
                 <div  style="margin-top: 5%; margin-left: 80%">
-                    <button class="btn" name="submit" value="Update" type="submit" th:text="Update" style="color: #FFF; background-color: #111"></button>
+                    <button class="btn" name="submit" value="Create" type="submit" th:text="Create" style="color: #FFF; background-color: #111"></button>
                 </div>
             </form>
         </div>
