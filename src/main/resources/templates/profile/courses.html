@@ -12,10 +12,22 @@
     <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
     <!--Body-->
     <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
-        <div  style="margin-top: 5%; margin-left: 80%">
-            <a role="button" href="/courses/create" class="btn" style="color: #FFF; background-color: #111">Add course</a>
+
+        <nav aria-label="breadcrumb" style="margin: 0px 5% 2% 3%;">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" aria-current="page" style="font-size: 18px">
+                    <a th:href="${'/profile/view'}">My account</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page" style="font-size: 18px">
+                    <a th:text="${user.firstName + ' ' + user.lastName}" th:href="${'/users/' + user.id}"></a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page" style="font-size: 18px">Courses</li>
+            </ol>
+        </nav>
+        <div  style="margin-left: 80%">
+            <a role="button" href="#" class="btn" style="color: #FFF; background-color: #111">Download</a>
         </div>
-        <div class="row" style="margin-top: 5%; margin-left: 3%; margin-right: 5%">
+        <div class="row" style="margin-top: 3%; margin-left: 3%; margin-right: 5%">
             <table class="table table-hover">
                 <thead class="thead-light">
                 <tr>
@@ -28,14 +40,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="course : ${courses}">
+                <tr th:each="course : ${user.courses}">
                     <th scope="row" th:text="${course.id}"></th>
                     <td th:text="${course.code}"></td>
                     <td th:text="${course.title}"></td>
                     <td th:text="${course.creditValue}"></td>
                     <td th:text="${course.semester}"></td>
                     <td>
-                        <a role="button" th:href="${'/courses/' + course.id}" class="btn btn-warning">View</a>
+                        <a role="button" th:href="${'/users/' + user.id + '/courses/' + course.id}" class="btn btn-warning">Drop</a>
+                        <a role="button" th:href="${'/courses/' + course.id + '/get-course-outline'}" class="btn btn-warning">Download course outline</a>
                     </td>
                 </tr>
                 </tbody>

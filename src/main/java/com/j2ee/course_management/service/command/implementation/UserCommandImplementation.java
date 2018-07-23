@@ -4,6 +4,7 @@ import com.j2ee.course_management.exception.BadRequestException;
 import com.j2ee.course_management.exception.ConflictException;
 import com.j2ee.course_management.exception.NotFoundException;
 import com.j2ee.course_management.model.User;
+import com.j2ee.course_management.repository.CourseRepository;
 import com.j2ee.course_management.repository.RoleRepository;
 import com.j2ee.course_management.repository.UserRepository;
 import com.j2ee.course_management.service.command.UserCommand;
@@ -21,7 +22,7 @@ public class UserCommandImplementation implements UserCommand {
 	private UserRepository userRepository;
 
 	@Autowired
-	private RoleRepository roleRepository;
+	private CourseRepository courseRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -31,15 +32,14 @@ public class UserCommandImplementation implements UserCommand {
 		if (userRepository.findByEmail(user.getEmail()) == null) {
 			if (userRepository.findByEmail(user.getUsername()) == null) {
 				user.setPassword(passwordEncoder.encode(user.getPassword()));
-				user.setId(0L);
 				userRepository.save(user);
 				return bindingResult;
 			}
-			bindingResult.rejectValue("Username", "error.user",
+			bindingResult.rejectValue("username", "error.user",
 					"Conflict: User username already exist");
 			return bindingResult;
 		}
-		bindingResult.rejectValue("Email", "error.user",
+		bindingResult.rejectValue("email", "error.user",
 				"Conflict: User email already exist");
 		return bindingResult;
 	}
@@ -55,7 +55,30 @@ public class UserCommandImplementation implements UserCommand {
 			userRepository.save(oldUser);
 			return bindingResult;
 		}
-		bindingResult.rejectValue("Id", "error.user","Not Found: User id does not exist");
+		bindingResult.rejectValue("id", "error.user","Not Found: User id does not exist");
 		return bindingResult;
+	}
+
+	@Override
+	public BindingResult updateProfile(User user, String username, BindingResult bindingResult) {
+		User loggedInUser = this.userRepository.findByUsername(username);
+		if (loggedInUser != null) {
+			loggedInUser.setFirstName(user.getFirstName());
+			loggedInUser.setLastName(user.getLastName());
+			loggedInUser.setEmail(user.getEmail());
+			loggedInUser.setTelephone(user.getTelephone());
+			loggedInUser.setRole(user.getRole());
+			userRepository.save(loggedInUser);
+			return bindingResult;
+		}
+		bindingResult.rejectValue("username", "error.user","Not Found: Username does not exist");
+		return bindingResult;
+	}
+
+	@Override
+	public void dropCourse(Long userId, Long courseId) {
+		User user = this.userRepository.getOne(userId);
+		user.getCourses().remove(courseRepository.getOne(courseId));
+		userRepository.save(user);
 	}
 }

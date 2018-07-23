@@ -35,6 +35,16 @@
                         <td>Name</td>
                         <td th:text="${department.name}"></td>
                     </tr>
+                    <tr>
+                        <td>Courses</td>
+                        <td>
+                            <p th:each="course : ${department.courses}">
+                                <span th:text="${course.code}"></span>
+                                <span style="margin: 0px 2% 0px 2%">-</span>
+                                <span th:text="${course.title}"></span>
+                            </p>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div  style="margin-top: 5%; margin-left: 85%">

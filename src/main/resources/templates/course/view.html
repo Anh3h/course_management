@@ -55,8 +55,9 @@
                 </tr>
                 </tbody>
             </table>
-            <div  style="margin-top: 5%; margin-left: 85%">
+            <div  style="margin-top: 5%; margin-left: 50%">
                 <a role="button" th:href="${'/courses/edit/' + course.id}" class="btn" style="color: #FFF; background-color: #111">Edit</a>
+                <a role="button" th:href="${'/courses/' + course.id + '/get-course-outline'}" class="btn" style="color: #FFF; background-color: #111">Download course outline</a>
             </div>
         </div>
     </div>

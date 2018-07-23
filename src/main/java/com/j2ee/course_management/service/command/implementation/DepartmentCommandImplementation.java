@@ -21,7 +21,7 @@ public class DepartmentCommandImplementation implements DepartmentCommand {
 			departmentRepository.save(department);
 			return bindingResult;
 		}
-		bindingResult.rejectValue("Id", "error.department","Conflict: Department already exist");
+		bindingResult.rejectValue("name", "error.department","Conflict: Department already exist");
 		return bindingResult;
 	}
 
@@ -30,15 +30,16 @@ public class DepartmentCommandImplementation implements DepartmentCommand {
 		Department oldDept = this.departmentRepository.getOne(departmentId);
 		if (oldDept != null) {
 			oldDept.setName(newDpt.getName());
+			oldDept.setCourses(newDpt.getCourses());
 			departmentRepository.save(oldDept);
 			return bindingResult;
 		}
-		bindingResult.rejectValue("Id", "error.department","Not Found: Department id does not exist");
+		bindingResult.rejectValue("id", "error.department","Not Found: Department id does not exist");
 		return bindingResult;
 	}
 
 	@Override
 	public void deleteDepartment(Long departmentId) {
-
+		this.departmentRepository.deleteById(departmentId);
 	}
 }

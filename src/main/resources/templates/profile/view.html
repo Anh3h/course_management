@@ -44,9 +44,8 @@
                 </tbody>
             </table>
             <div  style="margin-top: 5%; margin-left: 70%">
-                <a role="button" th:if="${user.role.name != 'ADMIN'}" th:href="${'/users/' + user.id + '/courses'}"
-                   class="btn" style="color: #FFF; background-color: #111">View Courses</a>
-                <a role="button" th:href="${'/users/edit/' + user.id}" class="btn" style="color: #FFF; background-color: #111">Edit</a>
+                <a role="button" th:if="${user.role.name != 'ADMIN'}" th:href="${'/profile/courses'}" class="btn" style="color: #FFF; background-color: #111">View Courses</a>
+                <a role="button" th:href="${'/profile/edit/'}" class="btn" style="color: #FFF; background-color: #111">Edit</a>
             </div>
         </div>
     </div>

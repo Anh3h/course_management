@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.j2ee.course_management.exception.BadRequestException;
+import com.j2ee.course_management.model.Course;
 import com.j2ee.course_management.model.Role;
 import com.j2ee.course_management.model.User;
 import com.j2ee.course_management.service.command.UserCommand;
@@ -12,6 +13,7 @@ import com.j2ee.course_management.service.query.RoleQuery;
 import com.j2ee.course_management.service.query.UserQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,12 +53,13 @@ public class UserController {
 			value = "/users/create",
 			method = RequestMethod.GET
 	)
-	public ModelAndView createUserForm() {
+	public ModelAndView createUserForm(Authentication authentication) {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = new User();
 		Page<Role> roles = this.roleQuery.findAll(1, 10);
 		modelAndView.addObject("user", user);
 		modelAndView.addObject("roles", roles);
+		modelAndView.addObject("role", authentication.getAuthorities().iterator().next().getAuthority());
 		modelAndView.setViewName("user/create");
 		return modelAndView;
 	}
@@ -65,13 +68,14 @@ public class UserController {
 			value = "/users",
 			method = RequestMethod.GET
 	)
-	public ModelAndView getUsers(Integer page, Integer size) {
+	public ModelAndView getUsers(Authentication authentication, Integer page, Integer size) {
 		ModelAndView modelAndView = new ModelAndView();
 		Map<String, Integer> pageAttributes = PageValidator.validatePageAndSize(page, size);
 		page = pageAttributes.get("page");
 		size = pageAttributes.get("size");
 
 		Page<User> users = this.userQuery.findAll(page, size);
+		modelAndView.addObject("role", authentication.getAuthorities().iterator().next().getAuthority());
 		modelAndView.setViewName("user/list");
 		modelAndView.addObject("users", users);
 		return modelAndView;
@@ -81,11 +85,25 @@ public class UserController {
 			value = "/users/{userId}",
 			method = RequestMethod.GET
 	)
-	public ModelAndView getUserById(@PathVariable("userId") Long userId) {
+	public ModelAndView getUserById(Authentication authentication, @PathVariable("userId") Long userId) {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = this.userQuery.findById(userId);
 		modelAndView.addObject("user", user);
+		modelAndView.addObject("role", authentication.getAuthorities().iterator().next().getAuthority());
 		modelAndView.setViewName("user/view");
+		return modelAndView;
+	}
+
+	@RequestMapping(
+			value = "/users/{userId}/courses",
+			method = RequestMethod.GET
+	)
+	public ModelAndView getCourserByUserId(Authentication authentication, @PathVariable("userId") Long userId) {
+		ModelAndView modelAndView = new ModelAndView();
+		User user = this.userQuery.findById(userId);
+		modelAndView.addObject("role", authentication.getAuthorities().iterator().next().getAuthority());
+		modelAndView.addObject("user", user);
+		modelAndView.setViewName("user/courses");
 		return modelAndView;
 	}
 
@@ -93,11 +111,23 @@ public class UserController {
 			value = "/users/edit/{userId}",
 			method = RequestMethod.GET
 	)
-	public ModelAndView updateUserForm(@PathVariable("userId") Long userId) {
+	public ModelAndView updateUserForm(Authentication authentication, @PathVariable("userId") Long userId) {
 		ModelAndView modelAndView = new ModelAndView();
 		User user = this.userQuery.findById(userId);
+		modelAndView.addObject("role", authentication.getAuthorities().iterator().next().getAuthority());
 		modelAndView.addObject("user", user);
 		modelAndView.setViewName("user/edit");
+		return modelAndView;
+	}
+
+	@RequestMapping(
+			value = "/users/{userId}/courses/{courseId}",
+			method = RequestMethod.GET
+	)
+	public ModelAndView getCourserByUserId(@PathVariable("userId") Long userId, @PathVariable("courseId") Long courseId) {
+		ModelAndView modelAndView = new ModelAndView();
+		this.userCommand.dropCourse(userId, courseId);
+		modelAndView.setViewName("redirect:/users/" + userId);
 		return modelAndView;
 	}
 

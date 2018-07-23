@@ -3,12 +3,16 @@ package com.j2ee.course_management.model;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Course {
@@ -27,13 +31,14 @@ public class Course {
 	@Column(name = "credit_value")
 	private String creditValue;
 	private String outline;
-	@ManyToMany(mappedBy = "courses")
-	private List<User> users;
-	@NotNull
-	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
-	private List<Department> departments;
 	@NotNull
 	private String semester;
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
+	private Set<User> users;
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "courses")
+	private Set<Department> departments;
 
 
 	public Course() {
@@ -79,11 +84,11 @@ public class Course {
 		this.outline = outline;
 	}
 
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
@@ -91,15 +96,15 @@ public class Course {
 		this.users.add(user);
 	}
 
-	public void addUserList(List<User> users) {
+	public void addUserList(Set<User> users) {
 		this.users.addAll(users);
 	}
 
-	public List<Department> getDepartments() {
+	public Set<Department> getDepartments() {
 		return departments;
 	}
 
-	public void setDepartments(List<Department> departments) {
+	public void setDepartments(Set<Department> departments) {
 		this.departments = departments;
 	}
 

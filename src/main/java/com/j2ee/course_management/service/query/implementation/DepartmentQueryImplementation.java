@@ -33,4 +33,9 @@ public class DepartmentQueryImplementation implements DepartmentQuery {
 		return departmentRepository.findAll(PageRequest.of(pageNumber-1, pageSize));
 	}
 
+	@Override
+	public List<Department> findAll() {
+		return departmentRepository.findAll();
+	}
+
 }

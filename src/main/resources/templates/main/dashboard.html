@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml">
+      layout:decorate="~{default}" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
 </head>
@@ -14,12 +14,12 @@
             <p style="font-size: 25px">Welcome</p>
             <hr>
             <div class="row" style="margin-top: 15%; margin-left: 3%">
-                <div class="col-sm-4">
+                <div class="col-sm-4" th:if="${role == 'ADMIN'}">
                     <div class="card" style="width: 20rem;">
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted">Courses</h6>
                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="#" class="card-link">Add</a>
+                            <a href="/courses/create" class="card-link">Add</a>
                             <a href="/courses" class="card-link">View</a>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4" th:if="${role == 'ADMIN'}">
                     <div class="card col 4" style="width: 20rem;">
                         <div class="card-body">
                             <h6 class="card-subtitle mb-2 text-muted">Users</h6>

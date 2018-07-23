@@ -1,5 +1,6 @@
 package com.j2ee.course_management.service.query.implementation;
 
+import com.j2ee.course_management.model.Role;
 import com.j2ee.course_management.model.User;
 import com.j2ee.course_management.repository.UserRepository;
 import com.j2ee.course_management.service.query.UserQuery;
@@ -24,6 +25,16 @@ public class UserQueryImplementation implements UserQuery {
 	@Override
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public Role getUserRole(String username) {
+		return userRepository.findByUsername(username).getRole();
 	}
 
 	@Override

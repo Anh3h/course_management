@@ -1,5 +1,6 @@
 package com.j2ee.course_management.configuration;
 
+import com.j2ee.course_management.properties.StorageProperties;
 import com.j2ee.course_management.repository.UserRepository;
 import com.j2ee.course_management.service.query.CustomUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 
 @Configuration
 @EnableWebSecurity
-/*@EnableGlobalMethodSecurity(securedEnabled = true)*/
-public class
-SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -33,6 +34,7 @@ SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		"/webjars/**"
 	};
 
+	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable()
@@ -40,9 +42,9 @@ SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers(AUTH_WHITELIST).permitAll()
-				.antMatchers("/**").permitAll()
-				.antMatchers("/admin/**").hasAuthority("LECTURER").anyRequest()
-				.authenticated().and().csrf().disable().formLogin()
+				.anyRequest()
+				.authenticated()
+				.and().csrf().disable().formLogin()
 				.loginPage("/login").failureUrl("/login?error=true")
 				.defaultSuccessUrl("/dashboard", true)
 				.and().logout()
@@ -51,10 +53,7 @@ SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.accessDeniedPage("/access-denied")
 				.and()
 				.httpBasic()
-				.authenticationEntryPoint(getBasicAuthEntryPoint())
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS);
+				.authenticationEntryPoint(getBasicAuthEntryPoint());
 
 	}
 
@@ -88,4 +87,15 @@ SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return authProvider;
 	}
 
+	@Bean
+	public StorageProperties storageProperties(){
+		StorageProperties storageProperties = new StorageProperties();
+		storageProperties.setLocation("src/main/resources/courses");
+		return storageProperties;
+	}
+
+	@Bean(name = "multipartResolver")
+	public StandardServletMultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver();
+	}
 }

@@ -10,5 +10,6 @@ public interface DepartmentQuery {
 	Department findById(Long id);
 	Department findByName(String name);
 	Page<Department> findAll(Integer pageNumber, Integer pageSize);
+	List<Department> findAll();
 
 }

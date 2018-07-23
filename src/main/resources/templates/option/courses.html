@@ -12,10 +12,19 @@
     <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
     <!--Body-->
     <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
-        <div  style="margin-top: 5%; margin-left: 80%">
-            <a role="button" href="/courses/create" class="btn" style="color: #FFF; background-color: #111">Add course</a>
-        </div>
-        <div class="row" style="margin-top: 5%; margin-left: 3%; margin-right: 5%">
+
+        <nav aria-label="breadcrumb" style="margin: 0px 5% 2% 3%;">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item" aria-current="page" style="font-size: 18px">
+                    <a th:href="${'/departments'}">Departments</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page" style="font-size: 18px">
+                    <a th:text="${department.name}"></a>
+                </li>
+                <li class="breadcrumb-item" aria-current="page" style="font-size: 18px">Courses</li>
+            </ol>
+        </nav>
+        <div class="row" style="margin-top: 3%; margin-left: 3%; margin-right: 5%">
             <table class="table table-hover">
                 <thead class="thead-light">
                 <tr>
@@ -35,7 +44,7 @@
                     <td th:text="${course.creditValue}"></td>
                     <td th:text="${course.semester}"></td>
                     <td>
-                        <a role="button" th:href="${'/courses/' + course.id}" class="btn btn-warning">View</a>
+                        <a role="button" th:href="${'/departments/' + department.id + '/courses/' + course.id}" class="btn btn-warning">Take</a>
                     </td>
                 </tr>
                 </tbody>

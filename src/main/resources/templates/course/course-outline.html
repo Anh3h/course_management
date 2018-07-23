@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{default}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div layout:fragment="content">
+    <div lang="en" th:replace="main/nav-bar :: nav.navbar"></div>
+    <div lang="en" th:replace="main/side-bar :: div.sidenav"></div>
+    <!--Body-->
+    <div class="main container" style="margin-left: 16%; margin-top: 7%" >
+        <div style="margin-top: 4%; margin-left: 20%; margin-right: 25%">
+            <nav aria-label="breadcrumb" style="margin-bottom: 2%; margin-right: 12%">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item" aria-current="page" style="font-size: 18px">
+                        <a th:href="${'/courses'}">Courses</a>
+                    </li>
+                    <li class="breadcrumb-item" aria-current="page" style="font-size: 18px">
+                        <a th:href="${'/courses/' + course.id}" th:text="${course.title}"></a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page" style="font-size: 18px">Course Outline</li>
+                </ol>
+            </nav>
+            <form th:action="@{'/courses/' + ${course.id} + '/course-outline'}" enctype="multipart/form-data" th:method="post">
+                <div class="custom-file col-sm-10">
+                    <input type="file" class="btn" name="file" id="file">
+                </div>
+                <div  style="margin-top: 5%; margin-left: 70%">
+                    <button class="btn" name="submit" value="Upload" type="submit" th:text="Upload" style="color: #FFF; background-color: #111"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

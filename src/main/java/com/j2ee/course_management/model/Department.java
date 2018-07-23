@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Department {
@@ -25,9 +26,9 @@ public class Department {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="department_course",
-			joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "department_id", referencedColumnName = "id"))
-	private List<Course> courses;
+			joinColumns = @JoinColumn(name = "department_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
+	private Set<Course> courses;
 
 	public Department() {
 	}
@@ -48,11 +49,11 @@ public class Department {
 		this.name = name;
 	}
 
-	public List<Course> getCourses() {
+	public Set<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(List<Course> courses) {
+	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
 	}
 

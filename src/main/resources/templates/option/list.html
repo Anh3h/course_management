@@ -29,7 +29,8 @@
                     <th scope="row" th:text="${department.id}"></th>
                     <td th:text="${department.name}"></td>
                     <td>
-                        <a role="button" th:href="${'/departments/' + department.id}" class="btn btn-warning">View</a>
+                        <a role="button" th:if="${role == 'ADMIN'}"  th:href="${'/departments/' + department.id}" class="btn btn-warning">View</a>
+                        <a role="button" th:if="${role != 'ADMIN'}" th:href="${'/departments/' + department.id + '/courses'}" class="btn btn-warning">Take a course</a>
                     </td>
                 </tr>
                 </tbody>

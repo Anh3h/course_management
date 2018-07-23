@@ -1,6 +1,6 @@
-<div th:fragment="sidenav" class="sidenav" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="sidenav" class="sidenav" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
     <a href="/dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a>
-    <a href="/courses"><i class="fa fa-book-alt"></i>Courses</a>
+    <a  th:if="${role == 'ADMIN'}" href="/courses"><i class="fa fa-book-alt"></i>Courses</a>
     <a href="/departments"><i class="fa fa-school-alt"></i>Options</a>
-    <a href="/users"><i class="fa fa-user-alt"></i>Users</a>
+    <a  th:if="${role == 'ADMIN'}" href="/users"><i class="fa fa-user-alt"></i>Users</a>
 </div>

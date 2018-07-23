@@ -14,57 +14,58 @@
     <div class="main container" style="margin-left: 16%; margin-top: 2%;" >
         <div style="margin-top: 10%; margin-left: 20%; margin-right: 25%">
             <!-- <form th:action="" th:object="" method="post" >-->
-            <form th:action="@{'/users/create'}" th:object="${user}" th:method="post">
+            <form th:action="@{'/profile/edit'}" th:object="${user}" th:method="post">
                 <div class="form-group row">
                     <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <input type="text" class="form-control" id="firstName" th:field="${user.firstName}"
                                th:value="${user.firstName}" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <input type="text" class="form-control" id="lastName" th:field="${user.lastName}"
                                th:value="${user.lastName}" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-8">
-                        <input type="email" class="form-control" id="email" th:field="${user.email}" th:value="${user.email}" required>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="email" th:field="${user.email}" th:value="${user.email}" required>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="username" class="col-sm-2 col-form-label">Username</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="username" th:field="${user.username}" required>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="username" th:field="${user.username}"
+                               th:value="${user.username}">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="password" class="col-sm-2 col-form-label">Password</label>
-                    <div class="col-sm-8">
-                        <input type="password" class="form-control" id="password" th:field="${user.password}" required>
-                    </div>
-                </div>
+                <!--<div class="form-group row">-->
+                    <!--<label for="username" class="col-sm-2 col-form-label">Password</label>-->
+                    <!--<div class="col-sm-10">-->
+                        <!--<input type="text" class="form-control" id="username" th:field="${user.password}">-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="form-group row">
                     <label for="telephone" class="col-sm-2 col-form-label">Telephone</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <input type="text" class="form-control" id="telephone" th:field="${user.telephone}"
                                th:value="${user.telephone}">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="role" class="col-sm-2 col-form-label">Role</label>
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <select class="form-control" id="role" th:field="${user.role}">
-                            <option th:each="role : ${roles}" th:field="${user.role}"
-                                    th:text="${role.name}" th:value="${role.id}"></option>
+                            <option th:each="role1 : ${roles}" th:field="${user.role}"
+                                    th:text="${role1.name}" th:value="${role1.id}"></option>
                         </select>
                     </div>
                 </div>
-                <div  style="margin-top: 5%; margin-left: 65%">
-                    <button class="btn" name="submit" value="Create" type="submit" th:text="Create" style="color: #FFF; background-color: #111"></button>
+                <div  style="margin-top: 5%; margin-left: 80%">
+                    <button class="btn" name="submit" value="Update" type="submit" th:text="Update" style="color: #FFF; background-color: #111"></button>
                 </div>
             </form>
         </div>

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -47,9 +48,9 @@ public class User {
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name="user_course",
-			joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-	private List<Course> courses;
+			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"))
+	private Set<Course> courses;
 
 	public User() {
 	}
@@ -118,11 +119,15 @@ public class User {
 		this.role = role;
 	}
 
-	public List<Course> getCourses() {
+	public Set<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(List<Course> courses) {
+	public void addCourse(Course courses) {
+		this.courses.add(courses);
+
+	}
+	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
 	}
 }
